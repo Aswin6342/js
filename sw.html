@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Play Audio on Click</title>
+</head>
+<body>
+  <!-- Button -->
+  <button onclick="playSound()">Play Sound</button>
+
+  <!-- Audio -->
+  <audio id="myAudio" src="audio.mp3"></audio>
+
+  <script>
+    function playSound() {
+      document.getElementById("myAudio").play();
+    }
+  </script>
+</body>
+</html>

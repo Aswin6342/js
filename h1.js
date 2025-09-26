@@ -29,6 +29,7 @@ console.log(found);
 var found=products.reduce((high,current)=>{
     return(high.price>current.price)?high:current
 })
+//to Find and display the product with the highest price.
 console.log(found.pName);
 var found=products.reduce((high,current)=>{
     return(high.price<current.price)?high:current

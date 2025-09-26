@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .add  {
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            margin: 5px;
+            background-color: rgb(51, 255, 0);
+        }
+        .sub  {
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            margin: 5px;
+            background-color: rgb(175, 13, 23);
+        }
+        .mul  {
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            margin: 5px;
+            background-color: rgb(59, 12, 153);
+        }
+        .div  {
+            width: 30px;
+            height: 30px;
+            font-size: 20px;
+            margin: 5px;
+            background-color: rgb(182, 227, 19);
+        }
+        input {
+            width: 100px;
+            height: 30px;
+            font-size: 20px;
+            margin: 5px;
+            background-color: black;
+            color: white;
+        }
+        #result {
+            color: green;
+            font-size: 30px;
+            margin: 10px;
+            font-weight: bold;
+            font-family: Arial, Helvetica, sans-serif;
+    
+        }
+        body {
+            text-align: center;
+            margin-top: 100px;
+        }
+
+
+    </style>
+</head>
+
+<body>
+    <input type="number" id="a" required>
+    <input type="number" id="b" required>
+    <br>
+    <button onclick="calculate('add')" class="add">+</button>
+    <button onclick="calculate('sub')" class="sub">-</button>
+    <button onclick="calculate('mul')" class="mul">*</button>
+    <button onclick="calculate('div')" class="div">/</button>
+    <br>
+    <h1 id="result"></h1>
+    <script>
+        function calculate(x) {
+            var a = Number(document.getElementById("a").value);
+            var b = Number(document.getElementById("b").value);
+            var result;
+            if (!a||!b) {
+                alert("Please enter both numbers");
+                return;
+            }
+            else {
+                if (x == "add") {
+                    result = a + b;
+                }
+                if (x == "sub") {
+                    result = a - b;
+                }
+                if (x == "mul") {
+                    result = a * b;
+                }
+                if (x == "div") {
+
+                    result = a / b;
+                }
+                document.getElementById("result").innerText = "Result: " + result;
+            }
+
+
+        }
+
+    </script>
+</body>
+
+</html>

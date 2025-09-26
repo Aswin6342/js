@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toggle Background</title>
+</head>
+<body style="background-color: black;">
+
+  <h1 class="k" style="color: rgb(170, 162, 162);">hello</h1>
+  <button onclick="change()">Click</button>
+
+  <script>
+    let isBlack = true;
+
+    function change() {
+      const body = document.getElementsByTagName("body")[0];
+      const heading = document.getElementsByClassName("k")[0];
+
+      if (isBlack) {
+        body.style.backgroundColor = "red";
+        heading.style.color = "black";
+      } else {
+        body.style.backgroundColor = "black";
+        heading.style.color = "rgb(30, 25, 25)";
+      }
+
+      isBlack = !isBlack;
+    }
+  </script>
+</body>
+</html>

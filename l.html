@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <center><img src="don.jpg" alt="" id="k"><br>
+        <audio id="myAudio" src="audio.mp3"></audio>
+        <br>
+        <button onclick="f1()">click</button>
+
+
+    </center>
+
+    <script>
+        let a = true;
+
+        function f1() {
+
+            if (a) {
+                document.getElementById("k").src = "don1.jpg"
+                document.getElementById("myAudio").play();
+
+
+            }
+            else {
+                document.getElementById("k").src = "don.jpg"
+                document.getElementById("myAudio").play();
+
+            }
+
+            a = !a;
+
+        }
+    </script>
+</body>
+
+</html>

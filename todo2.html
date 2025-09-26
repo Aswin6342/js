@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .todo {
+            background: white;
+            width: 70%;
+            padding: 20px;
+            margin-top: -600px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(1, 0, 0, 0.9);
+            margin: 0 15px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        button {
+            background: #667eea;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #5a67d8;
+        }
+
+        .task {
+            display: flex;
+
+            justify-content: space-between;
+            background: #f9f9f9;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: 0.3s;
+            border: solid 1px #2b1d1dd0;
+        }
+
+
+
+        .delete {
+            background: #e53e3e;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            color: white;
+        }
+
+        .delete:hover {
+            background: #be9090;
+        }
+
+        .update {
+            background: #38a169;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            color: white;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="todo">
+        <h1>ToDo</h1>
+        <div class="input-group">
+            <input type="text" id="values" placeholder="Type a task...">
+            <button onclick="add()">Add +</button>
+        </div>
+        <p id="task-list"></p>
+    </div>
+    <audio id="delete-sound" src="imdlr7s9w0h-ting-sfx-3.mp3"></audio>
+
+    <script>
+        function add() {
+            if (document.getElementById("values").value === "") {
+                alert("Please enter a task");
+                return;
+            }
+            const text = document.getElementById("values").value;
+
+            const task = document.createElement("div");
+            task.className = "task";
+
+            const taskText = document.createElement("span");
+            taskText.textContent = text;
+            const bb=document.createElement('div');
+            bb.className="red";
+            const update = document.createElement("button");
+            update.textContent = "pending";
+            update.className = "update";
+            update.addEventListener("click", () => {
+                if (update.textContent === "pending") {
+                    update.textContent = "completed";
+                    update.style.backgroundColor = "#5a67d8";
+                    document.getElementById("delete-sound").play();
+
+                }
+                else {
+                    update.textContent = "pending";
+                    update.style.backgroundColor = "#38a169";
+
+                }
+
+            });
+
+
+
+
+
+            const dlt = document.createElement("button");
+            dlt.textContent = "Delete";
+            dlt.className = "delete";
+            dlt.addEventListener("click", () => {
+                task.remove();
+            });
+            bb.appendChild(update);
+            bb.appendChild(dlt);                          
+
+            task.appendChild(taskText);
+            task.appendChild(bb);
+
+            document.getElementById("task-list").appendChild(task);
+
+            document.getElementById("values").value = "";
+
+        }
+    </script>
+</body>
+
+</html>
