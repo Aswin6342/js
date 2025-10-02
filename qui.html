@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3D Solar System</title>
+<style>
+  body { margin: 0; overflow: hidden; background: black; }
+  canvas { display: block; }
+  .label { 
+    position: absolute; 
+    color: white; 
+    font-family: Arial; 
+    font-size: 14px; 
+    pointer-events: none; 
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+let scene = new THREE.Scene();
+let camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 2000);
+let renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// Orbit controls for drag rotation and zoom
+let controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableZoom = true;
+controls.enableRotate = true;
+controls.enablePan = false;
+
+// Sun
+const sunGeo = new THREE.SphereGeometry(5, 32, 32);
+const sunMat = new THREE.MeshBasicMaterial({color:0xFFFF00});
+const sun = new THREE.Mesh(sunGeo, sunMat);
+scene.add(sun);
+
+// Create Sun label
+const sunLabel = document.createElement('div');
+sunLabel.className = 'label';
+sunLabel.innerText = 'Sun';
+document.body.appendChild(sunLabel);
+
+// Planet data: [name, size, distance from Sun, color, speed]
+const planetData = [
+  ["Mercury", 0.5, 10, 0xaaaaaa, 0.04],
+  ["Venus", 1.2, 15, 0xff6600, 0.015],
+  ["Earth", 1.5, 20, 0x0000ff, 0.01],
+  ["Mars", 1.1, 25, 0xff0000, 0.008],
+  ["Jupiter", 2.5, 35, 0xffa500, 0.005],
+  ["Saturn", 2.0, 45, 0xffddaa, 0.004],
+  ["Uranus", 1.5, 55, 0x00ffff, 0.003],
+  ["Neptune", 1.5, 65, 0x0000aa, 0.002]
+];
+
+let planets = [];
+let orbits = [];
+let labels = [];
+
+planetData.forEach(d=>{
+  let geo = new THREE.SphereGeometry(d[1],32,32);
+  let mat = new THREE.MeshPhongMaterial({color:d[3]});
+  let mesh = new THREE.Mesh(geo, mat);
+  let orbit = new THREE.Object3D();
+  orbit.add(mesh);
+  mesh.position.x = d[2];
+  scene.add(orbit);
+  planets.push(mesh);
+  orbits.push({obj:orbit, speed:d[4]});
+
+  // Create planet label
+  const label = document.createElement('div');
+  label.className = 'label';
+  label.innerText = d[0];
+  document.body.appendChild(label);
+  labels.push(label);
+});
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0x333333);
+scene.add(ambientLight);
+const pointLight = new THREE.PointLight(0xffffff,1.5,500);
+scene.add(pointLight);
+
+// Camera position
+camera.position.z = 100;
+
+// Handle window resize
+window.addEventListener('resize',()=>{
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// Animate planets
+function animate(){
+  requestAnimationFrame(animate);
+  orbits.forEach(o=>{
+    o.obj.rotation.y += o.speed;
+  });
+
+  // Update labels
+  const vector = new THREE.Vector3();
+  vector.setFromMatrixPosition(sun.matrixWorld);
+  vector.project(camera);
+  sunLabel.style.left = ((vector.x + 1)/2 * window.innerWidth) + 'px';
+  sunLabel.style.top = ((-vector.y + 1)/2 * window.innerHeight) + 'px';
+
+  planets.forEach((p,i)=>{
+    vector.setFromMatrixPosition(p.matrixWorld);
+    vector.project(camera);
+    labels[i].style.left = ((vector.x + 1)/2 * window.innerWidth) + 'px';
+    labels[i].style.top = ((-vector.y + 1)/2 * window.innerHeight) + 'px';
+  });
+
+  renderer.render(scene, camera);
+}
+animate();
+</script>
+</body>
+</html>

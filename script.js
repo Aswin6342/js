@@ -1,5 +1,5 @@
 // script.js
-
+const prompt = require("prompt-sync")();
 const display = document.getElementById('display');
 
 function append(value) {
